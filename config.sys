@@ -10,4 +10,5 @@ buffers=10
 device=d:\dosemu\ems.sys
 devicehigh=d:\dosemu\cdrom.sys
 install=d:\dosemu\lredir.com z: linux\fs\${DOSEMU_LIB_DIR}/drive_z ro
-shellhigh=z:\command.com /e:1024 /p
+install=d:\dosemu\lredir.com a: linux\fs/home/dosemu
+shellhigh=z:\command.com /e:1024 /p /k a: 

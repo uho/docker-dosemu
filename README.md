@@ -7,8 +7,8 @@ This is a setup of [DOSEMU](http://www.dosemu.org/) 1.4 using [Docker](https://w
     docker run -i -t --rm -v $(pwd):/home/dosemu -v $(pwd)/cdrom:/media/cdrom uhoffmann/dosemu args ...
 
 
-Inside DOSEMU drive `D:` will be mounted to `/home/dosemu` thus the Docker command above will make the current
-directory available as drive `D:`. Likewise drive `E:` will be mounted to `/media/cdrom´ and you can use 
+Inside DOSEMU drive `A:` as well as drive `D:` will be mounted to `/home/dosemu` thus the Docker command above will make the current
+directory available as drive `A:` **and** drive `D:`. Likewise drive `E:` will be mounted read only to `/media/cdrom` and you can use 
 Docker to map that wherever you want.
 
 As an example, to list your the current directory from DOS you can use:
@@ -24,19 +24,23 @@ The command line accepts the DOSEMU options as described in the [DOSEMU document
 
 Without argument the image boots into `COMMAND.COM` and you can work in the DOS environment. Exit the emulator with `exitemu`.
 
-DPMI has beend disabled as DOSEMU requires the Linux kernel to [provide 16bit-Segments](). 
-The modern kernels that current Docker uses do not support this any mode withou recompiation. 
+DPMI has beend disabled as DOSEMU requires the Linux kernel to [provide 16bit-Segments](https://comp.os.linux.misc.narkive.com/HbfvgRW2/debian-stretch-can-t-do-dpmi-anymore). 
+The modern kernels that current Docker uses do not support this any more without recompilation. 
 Any suggestions for workarounds are welcome.
 
 ## Create Your Own Image
 
-To build the image locally you can tweak `dosemu.conf` then use the provided `Dockerfile`:
+To build the image locally you can tweak `dosemu.conf`, `autoexec.bat`, and `config.sys` then use the provided `Dockerfile`:
 
     make image
 
 and run your locally built image:
 
     make run
+
+DOSEMU creates a subdirectory `.dosemu` in the current directory which holds, among other things, a copy of drive `C:` with `autoexec.bat` and `config.sys`.
+If already existing, the contents will not be overwritten. So you can adjust the DOS configuration on a per directory basis.
+But make sure you remove the `.dosemu` subdirectory before you run your image with modified settings, so they become active.
 
 ## Background Information
 
