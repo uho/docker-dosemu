@@ -28,6 +28,9 @@ RUN apt-get -y install dosemu
 
 # use our config file
 ADD dosemu.conf /etc/dosemu/dosemu.conf
+ADD autoexec.bat /etc/dosemu/freedos/autoexec.bat
+ADD config.sys /etc/dosemu/freedos/config.sys
+
 
 # run as user dosemu
 RUN useradd -ms /bin/bash dosemu
